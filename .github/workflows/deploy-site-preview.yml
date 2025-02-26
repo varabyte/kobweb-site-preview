@@ -70,6 +70,11 @@ jobs:
           cd kobweb-site/site
           ../../kobweb-${{ env.KOBWEB_CLI_VERSION }}/bin/kobweb export --notty --layout static
 
+      - name: Create fallback file
+        run: |
+          cd kobweb-site/site/.kobweb/site
+          cp index.html 404.html
+
       - name: Add robots.txt to disallow indexing
         run: |
           cd kobweb-site/site/.kobweb/site
