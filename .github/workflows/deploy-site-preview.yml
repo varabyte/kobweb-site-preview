@@ -1,7 +1,7 @@
-name: Deploy site preview
+name: Deploy site staging
 on:
   repository_dispatch:
-    types: [deploy-site-preview]
+    types: [deploy-site-staging]
   workflow_dispatch: # for manual runs
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
@@ -22,7 +22,7 @@ jobs:
         shell: bash
 
     env:
-      KOBWEB_CLI_VERSION: 0.9.18
+      KOBWEB_CLI_VERSION: 0.9.21
 
     steps:
       - name: Clone kobweb-site dev branch
@@ -82,7 +82,7 @@ jobs:
       - name: Add robots.txt to disallow indexing
         run: |
           cd kobweb-site/site/.kobweb/site
-          echo '# Skip indexing as this is a preview site just for testing.' > robots.txt
+          echo '# Skip indexing as this is a staging site just for testing.' > robots.txt
           echo '# https://kobweb.varabyte.com is the real site and THAT one will get indexed.' >> robots.txt
           echo 'User-agent: *' >> robots.txt
           echo 'Disallow: /' >> robots.txt
