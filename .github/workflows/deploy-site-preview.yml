@@ -30,13 +30,13 @@ jobs:
           git clone --depth=1 --branch dev https://github.com/varabyte/kobweb-site.git
 
       - name: Set up Java
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: 17
 
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v4
+        uses: gradle/actions/setup-gradle@v6
 
       # Gradle spams extra junk the first time it is run, so run a harmless command
       - name: Let Gradle get its noise out of its system
@@ -51,14 +51,14 @@ jobs:
           echo "value=$(./gradlew -q :site:kobwebBrowserCacheId)" >> $GITHUB_OUTPUT
 
       - name: Cache Browser Dependencies
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         id: playwright-cache
         with:
           path: ~/.cache/ms-playwright
           key: ${{ runner.os }}-playwright-${{ steps.browser-cache-id.outputs.value }}
 
       - name: Fetch kobweb
-        uses: robinraju/release-downloader@v1.10
+        uses: robinraju/release-downloader@v1.13
         with:
           repository: "varabyte/kobweb-cli"
           tag: "v${{ env.KOBWEB_CLI_VERSION }}"
@@ -88,7 +88,7 @@ jobs:
           echo 'Disallow: /' >> robots.txt
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
           path: kobweb-site/site/.kobweb/site
 
@@ -101,4 +101,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
